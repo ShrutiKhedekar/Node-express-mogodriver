@@ -21,8 +21,8 @@ class Server {
     this.initExpress();
     this.initDatabaseCon();
     this.initErrorHandler();
-    this.initRoutes();
-    this.initStart()
+    // this.initRoutes();
+     this.initStart()
   }
 
 
@@ -43,12 +43,13 @@ class Server {
   }
 
   initDatabaseCon() {
-    db.connect('mongodb://localhost:27017/mydatabase', function (err) {
+    db.connect('mongodb://localhost:27017', function (err) {
       if (err) {
         console.log('Unable to connect to Mongo.')
         process.exit(1)
       } else {
         console.log("connected");
+        router.load(app, './controllers');
       }
     });
   }
@@ -65,6 +66,7 @@ class Server {
     // app.use('/apis', require('./controllers'));
     // routes.load(app, './controllers');
     router.load(app, './controllers');
+    this.initStart()
   }
 
   initErrorHandler() {
