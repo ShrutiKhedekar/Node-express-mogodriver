@@ -9,6 +9,7 @@ const
   chalk = require('chalk'),
   errorHandler = require('errorhandler'),
   expressValidator = require('express-validator'),
+  Promise = require('bluebird'),
   router = require('./routes/router.js'),
   db = require("./config/dbs"),
   app = express();
@@ -40,6 +41,17 @@ class Server {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(expressValidator());
+
+    /**
+     * promise config
+     */
+
+     Promise.config({
+       warnings: true,
+       longStackTraces: true,
+       cancellation:true,
+       monitoring: true
+     })
   }
 
   initDatabaseCon() {

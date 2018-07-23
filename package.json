@@ -12,6 +12,7 @@
     "start": "nodemon app.js"
   },
   "dependencies": {
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.3",
     "chalk": "^2.4.1",
     "errorhandler": "^1.5.0",
