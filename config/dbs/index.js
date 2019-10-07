@@ -9,7 +9,7 @@ exports.connect = function (url, done) {
 
     MongoClient.connect(url, function (err, client) {
         if (err) return done(err)
-        state.db = client.db('mydatabase');
+        state.db = client.db('Job-portal');
         done()
     })
 }

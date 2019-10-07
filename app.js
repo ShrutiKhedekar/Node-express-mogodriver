@@ -16,20 +16,22 @@ const
 
 
 
+
+
 class Server {
 
   constructor() {
     this.initExpress();
     this.initDatabaseCon();
     this.initErrorHandler();
-    // this.initRoutes();
-     this.initStart()
+    //  this.initRoutes();
+    //  this.initStart()
   }
 
 
   initExpress() {
     app.set('host', process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');
-    app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
+    app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 5000);
 
     app.use(session({
       secret: 'work hard',
@@ -46,21 +48,23 @@ class Server {
      * promise config
      */
 
-     Promise.config({
-       warnings: true,
-       longStackTraces: true,
-       cancellation:true,
-       monitoring: true
-     })
+    Promise.config({
+      warnings: true,
+      longStackTraces: true,
+      cancellation: true,
+      monitoring: true
+    })
   }
 
   initDatabaseCon() {
+    let that = this;
     db.connect('mongodb://localhost:27017', function (err) {
       if (err) {
         console.log('Unable to connect to Mongo.')
         process.exit(1)
       } else {
         console.log("connected");
+        that.initRoutes();
         router.load(app, './controllers');
       }
     });
@@ -72,12 +76,12 @@ class Server {
       console.log('  Press CTRL-C to stop\n');
     });
 
+    // app.listen(3000);
+
 
   }
   initRoutes() {
-    // app.use('/apis', require('./controllers'));
-    // routes.load(app, './controllers');
-    router.load(app, './controllers');
+     router.load(app, './controllers');
     this.initStart()
   }
 
